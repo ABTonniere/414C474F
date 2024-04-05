@@ -1,2 +1,12 @@
-.idea/*
+######
+# Fichiers produits par les éditeurs
+.idea/
+.vscode/
+*.swap
+
+######
+# Autres fichiers
+*.tmp
+*.swp
+*.vim
 
