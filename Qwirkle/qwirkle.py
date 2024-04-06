@@ -1,5 +1,3 @@
-
-
 def verif(tuiles, cell) :
     if cell == "--" :
         tuiles.clear()
@@ -29,6 +27,7 @@ def verif(tuiles, cell) :
 def verifGrille() :
     tuiles = list()
     colonnes = list()
+    inventaire = dict()
     nbL, nbC = map(int, input().split())
     for i in range(nbL) :
         ligne = input().split()
@@ -40,6 +39,13 @@ def verifGrille() :
             if i == 0 :
                 colonnes.append(list())
             colonnes[j].append(ligne[j])
+            if ligne[j] != "--" :
+                if ligne[j] in inventaire :
+                    if inventaire[ligne[j]] >= 3 :
+                        return False
+                else :
+                    inventaire[ligne[j]] = 0
+                inventaire[ligne[j]] += 1
         tuiles.clear()
     tuiles = list()
     for col in colonnes :
