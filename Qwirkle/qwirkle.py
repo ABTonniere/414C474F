@@ -1,40 +1,55 @@
-def verifGrille(grille, xMax, yMax):
-    for x in range(xMax):
-        for y in range(yMax):
-            if not verifCellule(grille, x, y, xMax, yMax):
+
+
+def verif(tuiles, cell) :
+    if cell == "--" :
+        tuiles.clear()
+    else :
+        if (len(tuiles) == 0) :
+            tuiles.append(cell)
+        elif (len(tuiles) == 1) :
+            if (tuiles[0][0] != cell[0]) and (tuiles[0][1] != cell[1]) :
                 return False
-
+            elif (tuiles[0][0] == cell[0]) and (tuiles[0][1] == cell[1]) :
+                return False
+            tuiles.append(cell)
+        else :
+            if (tuiles[0][0] == tuiles[1][0]) :
+                if (tuiles[0][0] != cell[0]) or (tuiles[0][1] == cell[1]) :
+                    return False
+            elif (tuiles[0][1] == tuiles[1][1]) :
+                if (tuiles[0][0] == cell[0]) or (tuiles[0][1] != cell[1]) :
+                    return False
+            else :
+                return False
+            tuiles.append(cell)
+            if len(tuiles) > 6 :
+                return False
     return True
 
-
-def verifCellule(grille, x, y, xMax, yMax):
-    symboles = ['R', 'X', 'L', 'C', 'S', 'T']
-    couleurs = ['1', '2', '3', '4', '5', '6']
-
-    if grille[x][y] == "--":
-        return True
-
-    if len(grille[x][y]) != 2:
-        return False
-
-    if grille[x][y][0] not in symboles or grille[x][y][1] not in couleurs:
-        return False
-
-    symbole, couleur = grille[x][y]
-
-    symboles_voisins = []
-    couleurs_voisines = []
-    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-        nx, ny = x + dx, y + dy
-        if nx >= 0 and nx < len(grille) and ny >= 0 and ny < len(grille[0]):
-            cellule_voisine = grille[nx][ny]
-            if cellule_voisine != "--":
-                symbole_voisin, couleur_voisin = cellule_voisine[0], cellule_voisine[1]
-                symboles_voisins.append(symbole_voisin)
-                couleurs_voisines.append(couleur_voisin)
-
-    # vérification si ligne valide
-    if symbole in symboles_voisins and couleur in couleurs_voisines:
-        return False
-
+def verifGrille() :
+    tuiles = list()
+    colonnes = list()
+    nbL, nbC = map(int, input().split())
+    for i in range(nbL) :
+        ligne = input().split()
+        if len(ligne) != nbC :
+            return False
+        for j in range(len(ligne)) :
+            if not verif(tuiles, ligne[j]) :
+                return False
+            if i == 0 :
+                colonnes.append(list())
+            colonnes[j].append(ligne[j])
+        tuiles.clear()
+    tuiles = list()
+    for col in colonnes :
+        for c in col :
+            if not verif(tuiles, c) :
+                return False
+        tuiles.clear()
     return True
+
+if (verifGrille()) :
+    print("VALIDE")
+else :
+    print("INVALIDE")
