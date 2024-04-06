@@ -61,8 +61,8 @@ points = [0 for _ in range(nbJoueur)]
 nbTours = int(input())
 nbL, nbC = map(int, input().split())
 for tour in range(nbTours) :
-    print("Tour ",tour)
     for joueur in range(nbJoueur) :
-        points[joueur] += joue(tuiles, nbC, nbL)
+        points[joueur] += joue(tuiles, nbL, nbC)
+        print(points)
 for point in points :
     print(point)
