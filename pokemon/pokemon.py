@@ -23,8 +23,8 @@ class Pokemon:
         for attaque in range(len(attaques)):
             if attaques[attaque][1] < 0:
                 attaques[attaque] = (attaques[attaque][0], 0)
-            elif attaques[attaque][1] > 100:
-                attaques[attaque] = (attaques[attaque][0], 100)
+            elif attaques[attaque][1] > 600:
+                attaques[attaque] = (attaques[attaque][0], 600)
 
         self.attaques = attaques
 
@@ -64,31 +64,48 @@ def combat(deck1, deck2):
         poke2 = deck2.pokemons.pop(0)
 
         degats = poke1.attaques[poke1_n_attaque][1]
-        if poke1.attaques[poke1_n_attaque][0] in types_contretypes and poke2.typeP in types_contretypes:
+        if poke2.typeP in types_contretypes:
             if poke1.attaques[poke1_n_attaque][0] == types_contretypes[poke2.typeP]:
                 degats = degats * 2
+                print("critique")
             elif poke2.attaques[poke1_n_attaque][0] == poke2.typeP:
                 degats = degats // 2
+                print("pas très efficace")
 
+        print("########################################################")
+        print(poke1.nom + " attaque " + poke2.nom + " avec " + poke1.attaques[poke1_n_attaque][0] + " et inflige " + str(degats) + " degats")
         poke2.pv -= degats
+        print("pv de " + poke2.nom + " : " + str(poke2.pv))
+        print("attaque n°" + str(poke1_n_attaque) + " pour " + poke1.nom)
+        print("Set d'attaque de " + poke1.nom + " : " + str(poke1.attaques))
+
         poke1_n_attaque += 1
         if poke2.pv <= 0:
             poke2_n_attaque = 0
             deck1.pokemons.insert(0, poke1)
+            print(poke2.nom + " est mort")
             continue
 
         degats = poke2.attaques[poke2_n_attaque][1]
-        if poke2.attaques[poke2_n_attaque][0] in types_contretypes and poke1.typeP in types_contretypes:
+        if poke1.typeP in types_contretypes:
             if poke2.attaques[poke2_n_attaque][0] == types_contretypes[poke1.typeP]:
+                print("critique")
                 degats = degats * 2
             elif poke1.attaques[poke2_n_attaque][0] == poke1.typeP:
+                print("pas très efficace")
                 degats = degats // 2
 
+        print(poke2.nom + " attaque " + poke1.nom + " avec " + poke2.attaques[poke2_n_attaque][0] + " et inflige " + str(degats) + " degats")
         poke1.pv -= degats
+        print("pv de " + poke1.nom + " : " + str(poke1.pv))
+        print("attaque n°" + str(poke2_n_attaque) + " pour " + poke2.nom)
+        print("Set d'attaque de " + poke2.nom + " : " + str(poke2.attaques))
+
         poke2_n_attaque += 1
         if poke1.pv <= 0:
             poke1_n_attaque = 0
             deck2.pokemons.insert(0, poke2)
+            print(poke1.nom + " est mort")
             continue
 
         deck1.pokemons.insert(0, poke1)
