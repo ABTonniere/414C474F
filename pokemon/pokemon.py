@@ -136,9 +136,18 @@ def initDeck():
         else:
             nom, typeP, pv = donnes_poke
         pv = int(pv)
+        if pv < 1 :
+            pv = 1
+        elif pv > 600 :
+            pv = 600
         attaques = list()
         for j in range(3):
             typeA, degats = input().split(" ")
+            degats = int(degats)
+            if degats < 0 :
+                degats = 0
+            elif degats > 600 :
+                degats = 600
             attaques.append((typeA, int(degats)))
         d.ajouter_pokemon(Pokemon(nom, typeP, pv, attaques))
     return d
