@@ -23,7 +23,6 @@ def dfs(grille, i, j, mot):
 grille = []
 
 liste_mots_chercher = list()
-liste_mots_trouver = list()
 
 dims = str(input()).split(' ')
 dimX, dimY = int(dims[0]), int(dims[1])
@@ -34,17 +33,13 @@ for i in range(dimY):
 grille = [[ch for ch in ligne if ch != " "] for ligne in grille]
 
 nb_mots = int(input())
+nb_mots_trouve = 0
 
 for i in range(nb_mots):
     liste_mots_chercher.append(input())
 
 for mot in liste_mots_chercher:
     if chercher_mot(grille, mot):
-        liste_mots_trouver.append(mot)
+        nb_mots_trouve += 1
 
-liste_mots_trouver.sort()
-
-print(len(liste_mots_trouver))
-for mot in liste_mots_trouver:
-    print(mot)
-
+print(nb_mots_trouve)
